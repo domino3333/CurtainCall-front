@@ -12,8 +12,8 @@ export function PerformanceCard({ performance }) {
           <span>{performance.realmName}</span>
         </div>
         <h2>{performance.title}</h2>
-        <p>{performance.place}</p>
-        <p>
+        <p className="venue">{performance.place}</p>
+        <p className="location">
           {performance.area} {performance.sigungu}
         </p>
         <p className="date-range">

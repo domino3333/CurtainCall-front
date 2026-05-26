@@ -1,14 +1,19 @@
 :root {
-  --page-bg: #f8fafc;
-  --surface: #ffffff;
-  --surface-soft: #f1f5f9;
-  --ink: #111827;
-  --muted: #64748b;
-  --line: #e2e8f0;
-  --line-strong: #cbd5e1;
-  --accent: #a04545;
-  --accent-dark: #7f1d1d;
-  --focus-ring: rgba(81, 49, 49, 0.16);
+  --page-bg: #f6f2ec;
+  --surface: #fffaf3;
+  --surface-soft: #eee6db;
+  --ink: #191511;
+  --muted: #756b60;
+  --line: #e4d8ca;
+  --line-strong: #c9b7a4;
+  --accent: #8f1f2d;
+  --accent-dark: #4a1118;
+  --stage-gold: #c9923e;
+  --midnight: #172033;
+  --sage: #63796b;
+  --focus-ring: rgba(143, 31, 45, 0.18);
+  --shadow-soft: 0 16px 36px rgba(70, 45, 22, 0.1);
+  --shadow-lift: 0 24px 70px rgba(25, 21, 17, 0.16);
 
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
@@ -27,6 +32,10 @@
 
 body {
   margin: 0;
+}
+
+body::selection {
+  background: rgba(201, 146, 62, 0.35);
 }
 
 button,

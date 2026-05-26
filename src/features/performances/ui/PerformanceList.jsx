@@ -9,6 +9,10 @@ export function PerformanceList({ performances, isLoading, errorMessage }) {
     return <p className="state-message error">{errorMessage}</p>
   }
 
+  if (performances.length === 0) {
+    return <p className="state-message">조건에 맞는 공연정보가 없습니다.</p>
+  }
+
   return (
     <div className="performance-grid">
       {performances.map((performance) => (

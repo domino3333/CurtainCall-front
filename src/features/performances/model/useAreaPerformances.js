@@ -15,7 +15,15 @@ function matchesKeyword(performance, keyword) {
   return searchableText.includes(keyword)
 }
 
-export function useAreaPerformances(searchKeyword) {
+function matchesRealm(performance, selectedRealm) {
+  if (selectedRealm === 'all') {
+    return true
+  }
+
+  return [performance.serviceName, performance.realmName].includes(selectedRealm)
+}
+
+export function useAreaPerformances({ searchKeyword, selectedRealm }) {
   const [performances, setPerformances] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
@@ -55,11 +63,31 @@ export function useAreaPerformances(searchKeyword) {
       return performances
     }
 
-    return performances.filter((performance) => matchesKeyword(performance, keyword))
-  }, [performances, searchKeyword])
+    return performances.filter(
+      (performance) =>
+        matchesKeyword(performance, keyword) && matchesRealm(performance, selectedRealm),
+    )
+  }, [performances, searchKeyword, selectedRealm])
+
+  const realms = useMemo(() => {
+    const uniqueRealms = new Set()
+
+    performances.forEach((performance) => {
+      if (performance.serviceName) {
+        uniqueRealms.add(performance.serviceName)
+      }
+      if (performance.realmName) {
+        uniqueRealms.add(performance.realmName)
+      }
+    })
+
+    return ['all', ...uniqueRealms]
+  }, [performances])
 
   return {
     performances: filteredPerformances,
+    totalCount: performances.length,
+    realms,
     isLoading,
     errorMessage,
   }

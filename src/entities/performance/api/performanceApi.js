@@ -1,6 +1,6 @@
 import { normalizePerformanceResponse } from '../model/normalizePerformanceResponse.js'
 
-const AREA_PERFORMANCE_ENDPOINT = '/api/performance/test'
+const AREA_PERFORMANCE_ENDPOINT = '/api/performance/area'
 
 export async function getAreaPerformances() {
   const response = await fetch(AREA_PERFORMANCE_ENDPOINT)

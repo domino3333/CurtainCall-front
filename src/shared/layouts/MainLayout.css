@@ -1,29 +1,44 @@
 .app-shell {
   min-height: 100svh;
   background:
-    linear-gradient(180deg, rgba(127, 29, 29, 0.08), transparent 280px),
+    radial-gradient(circle at 14% 0%, rgba(201, 146, 62, 0.16), transparent 28%),
+    linear-gradient(180deg, rgba(143, 31, 45, 0.12), transparent 320px),
     var(--page-bg);
 }
 
 .site-header {
   position: relative;
-  padding: 28px 24px 18px;
+  padding: 30px 24px 18px;
+}
+
+.header-kicker {
+  position: absolute;
+  top: 42px;
+  left: 32px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .brand-banner {
-  width: min(520px, calc(100vw - 120px));
-  min-height: 88px;
+  width: min(540px, calc(100vw - 120px));
+  min-height: 92px;
   margin: 0 auto;
   display: grid;
   place-items: center;
-  border: 1px solid var(--line);
-  background: linear-gradient(135deg, var(--accent-dark), var(--accent) 46%, #172554);
-  color: #fff7ed;
-  font-size: 42px;
-  font-weight: 800;
+  border: 1px solid rgba(255, 250, 243, 0.36);
+  background:
+    linear-gradient(90deg, rgba(255, 250, 243, 0.08) 1px, transparent 1px) 0 0 / 18px
+      100%,
+    linear-gradient(135deg, var(--accent-dark), var(--accent) 52%, var(--midnight));
+  color: #fffaf3;
+  font-size: 44px;
+  font-weight: 900;
   letter-spacing: 0;
   text-decoration: none;
-  box-shadow: 0 20px 50px rgba(30, 41, 59, 0.16);
+  box-shadow: var(--shadow-lift);
 }
 
 .login-button {
@@ -34,7 +49,7 @@
   display: inline-flex;
   align-items: center;
   padding: 0 18px;
-  border: 1px solid var(--line-strong);
+  border: 1px solid rgba(143, 31, 45, 0.2);
   border-radius: 6px;
   background: var(--surface);
   color: var(--ink);
@@ -51,6 +66,10 @@
 @media (max-width: 720px) {
   .site-header {
     padding-top: 82px;
+  }
+
+  .header-kicker {
+    display: none;
   }
 
   .brand-banner {

@@ -6,6 +6,7 @@ export function MainLayout() {
   return (
     <div className="app-shell">
       <header className="site-header">
+        <div className="header-kicker">performance guide</div>
         <Link className="login-button" to={ROUTE_PATHS.login}>
           로그인
         </Link>
