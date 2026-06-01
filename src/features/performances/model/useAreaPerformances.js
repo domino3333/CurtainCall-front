@@ -2,12 +2,17 @@ import { useEffect, useMemo, useState } from 'react'
 import { getAreaPerformances } from '../../../entities/performance/api/performanceApi.js'
 
 function matchesKeyword(performance, keyword) {
+  if (!keyword) {
+    return true
+  }
+
   const searchableText = [
     performance.title,
     performance.place,
     performance.area,
     performance.sigungu,
     performance.realmName,
+    performance.serviceName,
   ]
     .join(' ')
     .toLowerCase()
@@ -59,10 +64,6 @@ export function useAreaPerformances({ searchKeyword, selectedRealm }) {
   const filteredPerformances = useMemo(() => {
     const keyword = searchKeyword.trim().toLowerCase()
 
-    if (!keyword) {
-      return performances
-    }
-
     return performances.filter(
       (performance) =>
         matchesKeyword(performance, keyword) && matchesRealm(performance, selectedRealm),
@@ -86,6 +87,7 @@ export function useAreaPerformances({ searchKeyword, selectedRealm }) {
 
   return {
     performances: filteredPerformances,
+    allPerformances: performances,
     totalCount: performances.length,
     realms,
     isLoading,

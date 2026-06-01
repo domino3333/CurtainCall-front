@@ -19,7 +19,7 @@ function toPerformanceItem(item) {
 
 function normalizeJsonResponse(text) {
   const data = JSON.parse(text)
-  const rawItems = data?.body?.items?.item ?? []
+  const rawItems = data?.body?.items?.item ?? data?.body?.items ?? []
   const items = Array.isArray(rawItems) ? rawItems : [rawItems]
 
   return items.map(toPerformanceItem)
