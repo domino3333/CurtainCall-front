@@ -1,7 +1,9 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { GuidePage } from '../../pages/guide/GuidePage.jsx'
 import { HomePage } from '../../pages/home/HomePage.jsx'
 import { LoginPage } from '../../pages/login/LoginPage.jsx'
 import { NotFoundPage } from '../../pages/not-found/NotFoundPage.jsx'
+import { PerformancesPage } from '../../pages/performances/PerformancesPage.jsx'
 import { MainLayout } from '../../shared/layouts/MainLayout.jsx'
 import { ROUTE_PATHS } from './routePaths.js'
 import { RouteGuard } from './RouteGuard.jsx'
@@ -12,6 +14,8 @@ export function AppRouter() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<HomePage />} />
+          <Route path={ROUTE_PATHS.guide} element={<GuidePage />} />
+          <Route path={ROUTE_PATHS.performances} element={<PerformancesPage />} />
 
           <Route element={<RouteGuard access="publicOnly" />}>
             <Route path={ROUTE_PATHS.login} element={<LoginPage />} />
