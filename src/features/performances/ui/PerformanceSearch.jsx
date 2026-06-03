@@ -1,17 +1,20 @@
-export function PerformanceSearch({ value, onChange }) {
+export function PerformanceSearch({ value, onChange, onSubmit }) {
   return (
-    <section className="search-section" aria-label="공연정보 검색">
+    <form className="search-section" aria-label="공연정보 검색" onSubmit={onSubmit}>
       <div className="search-copy">
-        <span>direct search</span>
-        <h2>이미 찾고 싶은 공연이 있다면 바로 검색하세요.</h2>
+        <span>검색</span>
+        <h2>공연명, 장소, 지역으로 찾아보세요.</h2>
       </div>
-      <input
-        className="search-input"
-        type="search"
-        placeholder="공연명, 장소, 지역, 분야로 검색"
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-      />
-    </section>
+      <div className="search-control">
+        <input
+          className="search-input"
+          type="search"
+          placeholder="예: 대학로, 전시, 부산"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+        />
+        <button type="submit">검색</button>
+      </div>
+    </form>
   )
 }

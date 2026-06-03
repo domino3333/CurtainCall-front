@@ -4,4 +4,5 @@ export const ROUTE_PATHS = {
   login: '/login',
   myPage: '/my',
   performances: '/performances',
+  performanceDetail: '/performances/:seq',
 }

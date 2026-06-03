@@ -1,4 +1,5 @@
 import { PerformanceCard } from './PerformanceCard.jsx'
+import { Link } from 'react-router-dom'
 
 export function PerformanceList({ performances, isLoading, errorMessage }) {
   if (isLoading) {
@@ -16,7 +17,13 @@ export function PerformanceList({ performances, isLoading, errorMessage }) {
   return (
     <div className="performance-grid">
       {performances.map((performance) => (
-        <PerformanceCard performance={performance} key={performance.seq} />
+        <Link
+          className="performance-card-link"
+          to={`/performances/${performance.seq}`}
+          key={performance.seq}
+        >
+          <PerformanceCard performance={performance} />
+        </Link>
       ))}
     </div>
   )

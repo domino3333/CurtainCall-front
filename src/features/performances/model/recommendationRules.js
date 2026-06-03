@@ -237,7 +237,7 @@ function scoreFreshness(performance, reasons) {
   const startDate = String(performance.startDate ?? '')
   const endDate = String(performance.endDate ?? '')
 
-  if (startDate.length === 8 && endDate.length === 8) {
+  if ((startDate.length === 8 || startDate.length === 10) && (endDate.length === 8 || endDate.length === 10)) {
     addReason(reasons, '공연 기간 정보가 확인된 항목이에요.')
     return 4
   }
@@ -245,8 +245,22 @@ function scoreFreshness(performance, reasons) {
   return 0
 }
 
+function isEndedPerformance(performance) {
+  const endDate = new Date(performance.endDate)
+
+  if (Number.isNaN(endDate.getTime())) {
+    return false
+  }
+
+  const today = new Date()
+  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+
+  return endDate < todayStart
+}
+
 export function recommendPerformances(performances, selections) {
   return performances
+    .filter((performance) => !isEndedPerformance(performance))
     .map((performance) => {
       const text = getPerformanceText(performance)
       const reasons = []

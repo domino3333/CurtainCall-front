@@ -3,21 +3,23 @@ import {
   INITIAL_GUIDE_STATE,
   recommendPerformances,
 } from '../../features/performances/model/recommendationRules.js'
-import { useAreaPerformances } from '../../features/performances/model/useAreaPerformances.js'
+import { usePagedPerformances } from '../../features/performances/model/usePagedPerformances.js'
 import { GuidedRecommendation } from '../../features/performances/ui/GuidedRecommendation.jsx'
 import { ModeHeader } from '../../features/performances/ui/ModeHeader.jsx'
 import '../../features/performances/ui/PerformanceSection.css'
 
 export function GuidePage() {
   const [guideSelections, setGuideSelections] = useState(INITIAL_GUIDE_STATE)
-  const { allPerformances, totalCount, isLoading, errorMessage } = useAreaPerformances({
+  const { performances, totalCount, isLoading, errorMessage } = usePagedPerformances({
+    page: 1,
+    size: 120,
     searchKeyword: '',
     selectedRealm: 'all',
   })
 
   const recommendations = useMemo(
-    () => recommendPerformances(allPerformances, guideSelections),
-    [allPerformances, guideSelections],
+    () => recommendPerformances(performances, guideSelections),
+    [performances, guideSelections],
   )
 
   function handleGuideSelect(key, value) {
@@ -31,7 +33,7 @@ export function GuidePage() {
     <>
       <ModeHeader
         title="조건에 따라 검색하기"
-        description="날씨, 동행, 분위기를 고르면 어울리는 공연과 전시를 먼저 추려드려요."
+        description="몇 가지 조건만 고르면 지금 보기 좋은 공연을 추려드려요."
       />
       <GuidedRecommendation
         selections={guideSelections}

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { formatCompactDate } from '../../../shared/lib/formatDate.js'
 import { GUIDE_STEPS } from '../model/recommendationRules.js'
 
@@ -9,7 +10,7 @@ function RecommendationCard({ result, rank }) {
   const { performance, reasons } = result
 
   return (
-    <article className="recommendation-card">
+    <Link className="recommendation-card" to={`/performances/${performance.seq}`}>
       <div className="recommendation-rank">추천 {rank}</div>
       <div className="recommendation-poster">
         {performance.thumbnail ? (
@@ -37,7 +38,7 @@ function RecommendationCard({ result, rank }) {
           ))}
         </ul>
       </div>
-    </article>
+    </Link>
   )
 }
 
@@ -50,17 +51,19 @@ export function GuidedRecommendation({
   isLoading,
   errorMessage,
 }) {
-  const selectedSummary = GUIDE_STEPS.map((step) => getSelectedLabel(step, selections[step.key]))
+  const selectedSummary = GUIDE_STEPS.filter((step) => selections[step.key] !== 'any').map((step) => ({
+    key: step.key,
+    label: getSelectedLabel(step, selections[step.key]),
+  }))
   const pickedCount = Object.values(selections).filter((value) => value !== 'any').length
 
   return (
     <section className="guide-section" aria-label="취향 기반 공연 추천">
       <div className="guide-intro">
-        <span className="eyebrow">guided pick</span>
-        <h1>뭘 볼지 몰라도 괜찮아요.</h1>
+        <span className="eyebrow">추천 검색</span>
+        <h1>선택이 어려울 때 쓰는 빠른 추천</h1>
         <p>
-          몇 번만 눌러보면 지금 고르기 좋은 공연과 전시를 먼저 추려드릴게요. 검색은
-          나중에 해도 됩니다.
+          장르 이름을 정확히 몰라도 괜찮아요. 날씨, 동행, 분위기만 골라서 후보를 좁혀보세요.
         </p>
       </div>
 
@@ -68,7 +71,7 @@ export function GuidedRecommendation({
         <div className="guide-panel">
           <div className="guide-panel-heading">
             <div>
-              <span className="summary-label">curtaincall selector</span>
+              <span className="summary-label">조건 선택</span>
               <h2>오늘의 선택</h2>
             </div>
             <button className="text-button" type="button" onClick={onReset}>
@@ -77,9 +80,11 @@ export function GuidedRecommendation({
           </div>
 
           <div className="selection-summary" aria-label="현재 선택한 조건">
-            {selectedSummary.map((label) => (
-              <span key={label}>{label}</span>
-            ))}
+            {selectedSummary.length === 0 ? (
+              <span>조건을 선택하면 여기에 표시됩니다</span>
+            ) : (
+              selectedSummary.map((item) => <span key={item.key}>{item.label}</span>)
+            )}
           </div>
 
           <div className="guide-steps">
@@ -112,15 +117,14 @@ export function GuidedRecommendation({
         <aside className="recommendation-panel" aria-label="추천 결과">
           <div className="recommendation-heading">
             <div>
-              <span className="summary-label">top picks</span>
+              <span className="summary-label">추천 결과</span>
               <h2>지금 추천</h2>
             </div>
             <span className="picked-count">{pickedCount}개 조건 선택</span>
           </div>
 
           <p className="recommendation-note">
-            현재는 공공데이터 {totalCount}개를 프론트 룰로 점수화해서 보여줘요. DB 저장이
-            끝나면 이 로직은 백엔드 추천 API로 옮기면 됩니다.
+            저장된 공연 {totalCount}개 중 현재 조건과 가까운 항목을 먼저 보여줍니다.
           </p>
 
           {isLoading && <p className="state-message">공연정보를 불러오는 중입니다.</p>}
